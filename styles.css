@@ -23,10 +23,11 @@ h1 {
 
 /* Style the canvas */
 canvas {
+  background-image: url(background.png);
   border: 5px solid #fff;
   border-radius: 0.5rem;
   box-shadow: 5px 5px #333;
-  margin-top: 2rem;
+  margin-right: 2rem;
 }
 
 /* Style the start game button */
@@ -49,6 +50,47 @@ button:hover {
 /* Style the game board */
 #game {
   margin-top: 2rem;
+}
+
+/* Style the instructions button */
+#instructions-btn {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #4caf50;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+#instructions-btn:hover {
+  background-color: #3e8e41;
+}
+
+/* Hide the instructions list by default */
+#instructions-list {
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: auto; /* Add this line to center the list */
+  max-width: 30rem;
+  text-align: left;
+}
+
+/* Style the list items */
+#instructions-list li {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* Style the list bullet point */
+#instructions-list li:before {
+  content: "•";
+  margin-right: 1rem;
+  color: #4caf50;
 }
 
 /* Style the scoreboard */
@@ -91,4 +133,14 @@ tr:nth-child(even) {
 
 tr:hover {
   background-color: #333;
+}
+
+/* Set the canvas dimensions for mobile devices */
+@media screen and (max-width: 378px) {
+  canvas {
+    width: 100vw;
+    height: 400px;
+    transform: rotate(90deg);
+    transform-origin: top left;
+  }
 }

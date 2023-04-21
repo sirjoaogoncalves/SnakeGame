@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Snake Game</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-	<h1>Snake Game</h1>
-    <canvas id="canvas" width="400" height="400"></canvas>
-    <br />
-    <button onclick="startGame()">Start Game</button>
-    <div id="game"></div>
-    <script src="script.js"></script>
-  </body>
+	<head>
+		<title>Snake Game</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+	<body>
+		<h1>Snake Game</h1>
+		<canvas id="canvas" width="400" height="400"></canvas>
+		<br />
+		<button onclick="startGame()">Start Game</button>
+		<br />
+		<button id="instructions-btn">Instructions</button>
+		<ul id="instructions-list">
+			<li>Use the arrow keys on your keyboard if you are playing on desktop.</li>
+			<li>If you are playing on a touch-based device, such as a smartphone or a tablet, use your finger to swipe in the direction you want the snake to move.</li>
+			<li>Make sure not to hit the walls or your own tail. If the snake hits a wall or its own tail, the game will be over.</li>
+			<li>
+				The goal of the game is to eat as many fruits as possible. Each time the snake eats a fruit, it will grow longer. Try to see how long you can make the snake before it hits a wall or its own
+				tail.
+			</li>
+			<li>Have fun and try to beat your high score!</li>
+		</ul>
+		<div id="game"></div>
+		<script src="script.js"></script>
+	</body>
 </html>

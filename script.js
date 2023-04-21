@@ -2,7 +2,7 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 const snakeSize = 10;
-const foodSize = 10;
+const foodSize = 16;
 let snake = [{ x: 200, y: 200 }];
 let food = { x: 0, y: 0 };
 let direction = "right";
@@ -17,7 +17,20 @@ let scoreboard = [];
     canvas.width = 600;
     canvas.height = 450;
 }
-  
+
+const instructionsBtn = document.getElementById('instructions-btn');
+const instructionsList = document.getElementById('instructions-list');
+
+// Toggle the visibility of the instructions list when the button is clicked
+instructionsBtn.addEventListener('click', function () {
+	if (instructionsList.style.display === 'none') {
+		instructionsList.style.display = 'block';
+	} else {
+		instructionsList.style.display = 'none';
+	}
+});
+
+
 function isMobile() {
   return /Mobi|Android/i.test(navigator.userAgent);
 }
@@ -182,32 +195,36 @@ function startGame() {
     snake.pop();
   }
 
-  function checkCollisions() {
-    // Check if the snake collided with a wall or with itself
-    if (
-      snake[0].x < 0 ||
-      snake[0].x >= canvas.width ||
-      snake[0].y < 0 ||
-      snake[0].y >= canvas.height
-    ) {
+function checkCollisions() {
+  // Check if the snake collided with a wall or with itself
+  if (
+    snake[0].x < 0 ||
+    snake[0].x + snakeSize > canvas.width ||
+    snake[0].y < 0 ||
+    snake[0].y + snakeSize > canvas.height
+  ) {
+    endGame(startTime);
+    return;
+  }
+  for (let i = 1; i < snake.length; i++) {
+    if (snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
       endGame(startTime);
       return;
     }
-    for (let i = 1; i < snake.length; i++) {
-      if (snake[0].x == snake[i].x && snake[0].y == snake[i].y) {
-        endGame(startTime);
-        return;
-      }
-    }
+  }
 
-    // Check if the snake ate the food
-    if (snake[0].x == food.x && snake[0].y == food.y) {
-      // Add a new segment to the snake and generate new food
-      snake.push({ x: snake[snake.length - 1].x, y: snake[snake.length - 1].y });
-      generateFood();
-    }
+  // Check if the snake's head collided with the food
+  if (
+    snake[0].x + snakeSize >= food.x &&
+    snake[0].x <= food.x + foodSize &&
+    snake[0].y + snakeSize >= food.y &&
+    snake[0].y <= food.y + foodSize
+  ) {
+    // Add a new segment to the snake and generate new food
+    snake.push({ x: snake[snake.length - 1].x, y: snake[snake.length - 1].y });
+    generateFood();
+  }
 }
-
  function generateFood() {
 		// Generate a random position for the food within the visible area of the canvas
 		food.x = Math.floor(Math.random() * (canvas.width - foodSize));
@@ -237,19 +254,21 @@ function startGame() {
 			}
 		}
  }
+// Define the image
+const appleImg = new Image();
+appleImg.src = 'apple.png';
 
   function drawSnake() {
     // Draw each segment of the snake
     for (let i = 0; i < snake.length; i++) {
-      ctx.fillStyle = "green";
+      ctx.fillStyle = "black";
       ctx.fillRect(snake[i].x, snake[i].y, snakeSize, snakeSize);
     }
   }
 
   function drawFood() {
     // Draw the food
-    ctx.fillStyle = "red";
-    ctx.fillRect(food.x, food.y, foodSize, foodSize);
+    ctx.drawImage(appleImg, food.x, food.y, foodSize, foodSize);
   }
 
 function endGame(startTime) {
@@ -320,3 +339,19 @@ function displayScoreboard() {
         break;
     }
   });
+
+  // Rotate the canvas on mobile devices
+function rotateCanvas() {
+  const canvas = document.getElementById('canvas');
+
+  if (window.innerWidth <= 378) {
+    canvas.style.transform = 'rotate(90deg)';
+    canvas.style.transformOrigin = 'top left';
+  } else {
+    canvas.style.transform = 'none';
+  }
+}
+
+// Call the rotateCanvas function on page load and resize
+window.addEventListener('load', rotateCanvas);
+window.addEventListener('resize', rotateCanvas);
