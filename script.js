@@ -9,6 +9,13 @@ let direction = "right";
 let gameStarted = false;
 let scoreboard = [];
 
+let startGameBtn = document.createElement('button');
+startGameBtn.id = 'start-game-btn'; // add this line
+startGameBtn.innerText = 'Start Game';
+startGameBtn.addEventListener('click', function () {
+	startGame();
+});
+
   // Set the size of the canvas based on the device
   if (isMobile()) {
     canvas.width = window.innerWidth * 0.8;
@@ -50,6 +57,7 @@ function startGame() {
 	drawSnake();
 	drawFood();
 	displayScoreboard();
+	
 
 	// Add a listener to set the direction of the snake
 	document.addEventListener('keydown', function setDirection(event) {
@@ -285,17 +293,27 @@ function endGame(startTime) {
 	});
 
 	// Display the updated scoreboard
+	ctx.clearRect(0, 0, canvas.width, canvas.height);
+	displayScoreboard();
+
+	// Remove the previous button, if present
+	let prevBtn = document.querySelector('#start-game-btn');
+	if (prevBtn) {
+		prevBtn.remove();
+	}
+
+	// Add the start game button, but only if the scoreboard is not being displayed
 	if (!gameStarted) {
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		displayScoreboard();
+		document.getElementById('game').appendChild(startGameBtn);
 	}
 
 	// Reset the game variables
 	snake = [{ x: Math.floor(canvas.width / 2), y: Math.floor(canvas.height / 2) }];
 	direction = null;
 	generateFood();
-	gameStarted = false;
 }
+
+
 function displayScoreboard() {
 	// Display the scoreboard
 	scoreboard.sort((a, b) => b.score - a.score);
@@ -365,3 +383,8 @@ function rotateCanvas() {
 // Call the rotateCanvas function on page load and resize
 window.addEventListener('load', rotateCanvas);
 window.addEventListener('resize', rotateCanvas);
+document.addEventListener('keydown', function (e) {
+	if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].indexOf(e.code) > -1) {
+		e.preventDefault();
+	}
+});
