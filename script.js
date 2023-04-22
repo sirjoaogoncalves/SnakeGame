@@ -1,7 +1,7 @@
 // Initialize variables
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const snakeSize = 10;
+const snakeSize = 16;
 const foodSize = 16;
 let snake = [{ x: 200, y: 200 }];
 let food = { x: 0, y: 0 };
@@ -339,16 +339,26 @@ function displayScoreboard() {
         break;
     }
   });
-
-  // Rotate the canvas on mobile devices
+// Rotate the canvas on mobile devices
 function rotateCanvas() {
   const canvas = document.getElementById('canvas');
 
-  if (window.innerWidth <= 378) {
+  if (window.innerWidth <= 768) {
     canvas.style.transform = 'rotate(90deg)';
     canvas.style.transformOrigin = 'top left';
+
+    // Prevent the default action of touch events on the rotated canvas
+    canvas.addEventListener('touchstart', function(event) {
+      event.preventDefault();
+    }, { passive: false });
   } else {
     canvas.style.transform = 'none';
+    canvas.style.transformOrigin = 'center center';
+
+    // Remove the touch event listener when the canvas is not rotated
+    canvas.removeEventListener('touchstart', function(event) {
+      event.preventDefault();
+    });
   }
 }
 
