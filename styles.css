@@ -113,11 +113,12 @@ button:hover {
 table {
   border-collapse: collapse;
   margin: 2rem 0;
-  width: 100%;
+  width: 50%;
   font-size: 1rem;
   align-items: center;
   justify-content: center;
   text-align: center;
+  margin: auto;
 }
 
 th, td {

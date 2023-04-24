@@ -1,8 +1,8 @@
 // Initialize variables
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-const snakeSize = 16;
-const foodSize = 16;
+const snakeSize = 10;
+const foodSize = 10;
 let snake = [{ x: 200, y: 200 }];
 let food = { x: 0, y: 0 };
 let direction = "right";
@@ -21,8 +21,8 @@ startGameBtn.addEventListener('click', function () {
     canvas.width = window.innerWidth * 0.8;
     canvas.height = canvas.width * 0.75;
   } else {
-    canvas.width = 600;
-    canvas.height = 450;
+    canvas.width = 800;
+    canvas.height = 600;
 }
 
 const instructionsBtn = document.getElementById('instructions-btn');
